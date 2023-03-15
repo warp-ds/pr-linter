@@ -1,0 +1,11 @@
+---
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  do_it:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
