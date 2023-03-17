@@ -1,0 +1,9 @@
+{
+    "pull_request": {
+      "base": {
+        "ref": "alpha"
+      },
+      "title": "notValid: Valid title"
+    }
+}
+  
