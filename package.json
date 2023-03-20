@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "ncc build --minify --no-source-map-register --no-cache index.js --out dist/",
-    "test": "pnpm build  && act pull_request -e ./mock/valid_pr_title.json && act pull_request -e ./mock/should_not_run.json&& act pull_request -e ./mock/not_valid_pr_title.json"
+    "test:script": "pnpm jest",
+    "test:run": "pnpm build  && act pull_request -e ./mock/valid_pr_title.json && act pull_request -e ./mock/should_not_run.json&& act pull_request -e ./mock/not_valid_pr_title.json"
   },
   "keywords": [],
   "author": "@djh",
