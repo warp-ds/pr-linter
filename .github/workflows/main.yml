@@ -2,9 +2,6 @@
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
-    branches-ignore: 
-      - 'main'
-      - 'master'
 
 jobs:
   do_it:
