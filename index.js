@@ -1,4 +1,4 @@
-import core from '@actions/core'
+import * as core from '@actions/core'
 import { context } from '@actions/github'
 
 const prRegex = new RegExp('^(chore|docs|feat|fix|perf|refactor|style|test|build|revert)((.+))?:(.+)');
@@ -7,7 +7,7 @@ const branches = [
   'master'
 ]
 
-async function go() {
+ const go = async () => {
   try {
     if (context.eventName !== 'pull_request' || branches.find(b => b === context.payload.pull_request.base.ref)) return
     const title = context.payload.pull_request?.title
@@ -19,4 +19,7 @@ async function go() {
   }
 }
 
-await go()
+go()
+
+export default go
+
