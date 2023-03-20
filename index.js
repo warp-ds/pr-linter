@@ -9,7 +9,7 @@ const branches = [
 
  const go = async () => {
   try {
-    if (context.eventName !== 'pull_request' || branches.find(b => b === context.payload.pull_request.base.ref)) return
+    if (context.eventName !== 'pull_request') return
     const title = context.payload.pull_request?.title
     const passes = !!prRegex.test(title)
     if (!passes) core.setFailed(`PR title '${title}' does not meet commit message requirements. More info: https://www.conventionalcommits.org/en/v1.0.0/#summary`)
