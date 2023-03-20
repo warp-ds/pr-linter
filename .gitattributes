@@ -1,1 +1,3 @@
-mock export-ignore
+test export-ignore
+jest.config.cjs export-ignore
+babel.config.json export-ignore

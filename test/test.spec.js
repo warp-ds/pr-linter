@@ -1,76 +1,48 @@
 import * as github from '@actions/github'
 import * as core from '@actions/core'
 import go from '..'
+import * as validPR from './mock/valid_pr_title.json';
+import * as notValidPR from './mock/not_valid_pr_title.json';
+import * as notValidBranchPr from './mock/should_not_run.json';
+import * as validPRwithScope from './mock/valid_pr_title_scope.json';
 
 
 const errorMessage = (title) => `PR title '${title}' does not meet commit message requirements. More info: https://www.conventionalcommits.org/en/v1.0.0/#summary`;
 
+const contextPR = (payload) => ({
+  eventName: 'pull_request',
+  payload
+});
+
 describe('pr title linter', () => {
 
   it('does not fail when valid PR title without scope', async () => {
-    github.context = {
-      eventName: 'pull_request',
-      payload: {
-        "pull_request": {
-          "base": {
-            "ref": "alpha"
-          },
-          "title": "fix: Valid title"
-        }
-      }
-    }
+    github.context = contextPR(validPR);
+
     const res = await go();
     expect(res).toEqual(undefined)
   });
 
-  it('does not fail when valid PR title without scope', async () => {
-    github.context = {
-      eventName: 'pull_request',
-      payload: {
-        "pull_request": {
-          "base": {
-            "ref": "alpha"
-          },
-          "title": "fix(scope): Valid title"
-        }
-      }
-    }
+  it('does not fail when valid PR title with scope', async () => {
+    github.context = contextPR(validPRwithScope);
+
     const res = await go();
     expect(res).toEqual(undefined)
   });
 
 
   it('should return undefined if not valid branch', async () => {
-    github.context = {
-      eventName: 'pull_request',
-      payload: {
-        "pull_request": {
-          "base": {
-            "ref": "main"
-          },
-          "title": "fix: Valid title"
-        }
-      }
-    }
+    github.context = contextPR(notValidBranchPr);
+
     const res = await go();
     expect(res).toEqual(undefined)
   });
   it('should fail when invalid PR title', async () => {
+    github.context = contextPR(notValidPR);
+
     const setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation(jest.fn())
-  
-    const title = "hej: Not valid title";
-    github.context = {
-      eventName: 'pull_request',
-      payload: {
-        "pull_request": {
-          "base": {
-            "ref": "alpha"
-          },
-          title 
-        }
-      }
-    }  
+
     await go();
-    expect(setFailedMock).toHaveBeenCalledWith(errorMessage(title))
+    expect(setFailedMock).toHaveBeenCalledWith(errorMessage(notValidPR.pull_request.title))
   })
 })
