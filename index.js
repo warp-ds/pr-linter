@@ -1,7 +1,7 @@
 import core from '@actions/core'
 import { context } from '@actions/github'
 
-const prRegex = new RegExp('^(chore|docs|feat|fix|perf|refactor|style|test|build|revert)((.+))?:(.+)');
+const prRegex = new RegExp('^(chore|docs|feat|fix|perf|refactor|style|test|build|revert)((.+))?: (.+)');
 const branchesToIgnore = [
   'main',
   'master'
