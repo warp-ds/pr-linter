@@ -2,7 +2,7 @@
 name: Lint PR title
 description: Checks a PR title for sanity against conventional commit standards
 runs:
-  using: node16
+  using: node24
   main: dist/index.js
 branding:
   icon: message-circle
